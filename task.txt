@@ -1,0 +1,8 @@
+Make Node.js Command line tool, which will split large file (more than 1GB)
+into small files with given size for each one. This should be command line tool,
+and should be working from Terminal/CMD Command line interface:
+“node program.js <large_file_path> <small file max size> <output directory>“
+
+Example: 
+node.js example.js large_file.mp4 200 ./small-files
+this will split “large_file.mp4” large file into small files not more than 200KB each one.
