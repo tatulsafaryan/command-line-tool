@@ -7,14 +7,15 @@ const stream = new fs.ReadStream(file_read);
 stream.on('readable', function(){
     let data = stream.read();
     let position = 0;
-    let output_directory = 4;
+    let file_index = 4;
 
-    function write_File(output_directory,position) {
+//Recursive function for recording in files
+    function write_File(file_index,position) {
 
-        if(output_directory >= process.argv.length ) {
+        if(file_index >= process.argv.length ) {
             return console.log("success");
         }
-        fs.open(process.argv[output_directory], 'w', function(err, fd) {
+        fs.open(process.argv[file_index], 'w', function(err, fd) {
 
             if (err) {
                 throw 'could not open file: ' + err;
@@ -27,13 +28,13 @@ stream.on('readable', function(){
                 fs.close(fd, function() {
 
                     position = position + offset;
-                    write_File(output_directory + 1,position);
+                    write_File(file_index + 1,position);
                 });
             });
         });
     }
      if(fs.statSync(process.argv[2]).size >= 1073741824) {
-        write_File(output_directory,position) ;
+        write_File(file_index,position) ;
      }
      else {
         return console.log("Your file smaller 1GB")
@@ -48,7 +49,7 @@ stream.on('end', function(){
 
 stream.on('error', function(err){
     if(err.code == 'ENOENT'){
-        console.log("Файл не найден");
+        console.log("File note found․You must pass: 'node program.js <large_file_path> <small file max size> <output directory>' ");
     }else{
         console.error(err);
     }
